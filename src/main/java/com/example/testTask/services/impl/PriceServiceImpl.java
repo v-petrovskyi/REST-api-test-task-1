@@ -24,15 +24,15 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public Price getMin(String symbol1, String symbol2) {
-//        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceAsc(symbol1, symbol2);
-        return null;
+    public Price getMin(String currency) {
+        String[] split = currency.split("/");
+        return repository.getFirstByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
     }
 
     @Override
-    public Price getMax(String symbol1, String symbol2) {
-//        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceDesc(symbol1, symbol2);
-        return null;
+    public Price getMax(String currency) {
+        String[] split = currency.split("/");
+        return repository.getFirstByCurr1AndCurr2OrderByLpriceDesc(split[0], split[1]);
     }
 
     @Override

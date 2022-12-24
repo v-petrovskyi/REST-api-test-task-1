@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface PriceService {
     Price add(Price price);
-    Price getMin(String symbol1, String symbol2);
-    Price getMax(String symbol1, String symbol2);
+    Price getMin(String currency);
+    Price getMax(String currency);
     List<Price> getAll();
 }
 

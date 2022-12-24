@@ -22,15 +22,15 @@ public class TestTask1Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws InterruptedException {
-        priceService.add(new Price("BTC", "USD", 1535.8545, LocalDateTime.now()));
-        Thread.sleep(1000);
-        priceService.add(new Price("BTC", "USD", 15632.11, LocalDateTime.now()));
-        Thread.sleep(1000);
-        priceService.add(new Price("BTC", "USD", 1534.25, LocalDateTime.now()));
+//        priceService.add(new Price("BTC", "USD", 1535.8545, LocalDateTime.now()));
+//        Thread.sleep(1000);
+//        priceService.add(new Price("BTC", "USD", 15632.11, LocalDateTime.now()));
+//        Thread.sleep(1000);
+//        priceService.add(new Price("BTC", "USD", 1534.25, LocalDateTime.now()));
 
-        for (Price price : priceService.getAll()) {
-            System.out.println(price);
-        }
+
+        System.out.println(priceService.getMin("BTC/USD"));
+//        System.out.println(priceService.getAll());
 
 
     }

@@ -4,8 +4,8 @@ import com.example.testTask.entity.Price;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PriceRepository extends MongoRepository<Price, String> {
+     Price getFirstByCurr1AndCurr2OrderByLpriceAsc(String curr1, String curr2);
 
-//    public Price getPriceBySymbol1AndSymbol2OrderByLpriceAsc(String symbol1, String symbol2);
-//    public Price getPriceBySymbol1AndSymbol2OrderByLpriceDesc(String symbol1, String symbol2);
+     Price getFirstByCurr1AndCurr2OrderByLpriceDesc(String curr1, String curr2);
 
 }
