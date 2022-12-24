@@ -14,14 +14,14 @@ import java.util.Date;
 public class Price {
     @Id
     private String id;
-    private String symbol1;
-    private String symbol2;
+    private String curr1;
+    private String curr2;
     private Double lprice;
-    private Long date;
+    private LocalDateTime date;
 
-    public Price(String symbol1, String symbol2, Double lprice, Long date) {
-        this.symbol1 = symbol1;
-        this.symbol2 = symbol2;
+    public Price(String curr1, String curr2, Double lprice, LocalDateTime date) {
+        this.curr1 = curr1;
+        this.curr2 = curr2;
         this.lprice = lprice;
         this.date = date;
     }
