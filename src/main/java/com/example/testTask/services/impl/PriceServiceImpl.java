@@ -25,12 +25,14 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getMin(String symbol1, String symbol2) {
-        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceAsc(symbol1, symbol2);
+//        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceAsc(symbol1, symbol2);
+        return null;
     }
 
     @Override
     public Price getMax(String symbol1, String symbol2) {
-        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceDesc(symbol1, symbol2);
+//        return repository.getPriceBySymbol1AndSymbol2OrderByLpriceDesc(symbol1, symbol2);
+        return null;
     }
 
     @Override
