@@ -1,8 +1,6 @@
 package com.example.testTask;
 
 import com.example.testTask.entity.PairPrice;
-import com.example.testTask.entity.Price;
-import com.example.testTask.repositories.PriceRepository;
 import com.example.testTask.services.CexIoJson;
 import com.example.testTask.services.PriceService;
 import com.example.testTask.util.PairPriceToPrice;
@@ -13,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class TestTask1Application implements CommandLineRunner {
