@@ -3,6 +3,7 @@ package com.example.testTask;
 import com.example.testTask.entity.PairPrice;
 import com.example.testTask.services.CexIoJson;
 import com.example.testTask.services.PriceService;
+import com.example.testTask.services.WriteToDB;
 import com.example.testTask.util.PairPriceToPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +19,9 @@ public class TestTask1Application implements CommandLineRunner {
     @Autowired
     private PriceService priceService;
 
+    @Autowired
+    private WriteToDB write;
+
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
@@ -32,16 +36,13 @@ public class TestTask1Application implements CommandLineRunner {
     public void run(String... args) {
         Thread thread = new Thread(() -> {
             while (true) {
-                PairPrice pairPriceBTC = new CexIoJson(restTemplate()).getLastPrice("BTC", "USD");
-                priceService.add(PairPriceToPrice.convertToPrice(pairPriceBTC));
-                PairPrice pairPriceETH = new CexIoJson(restTemplate()).getLastPrice("ETH", "USD");
-                priceService.add(PairPriceToPrice.convertToPrice(pairPriceETH));
-                PairPrice pairPriceXRP = new CexIoJson(restTemplate()).getLastPrice("XRP", "USD");
-                priceService.add(PairPriceToPrice.convertToPrice(pairPriceXRP));
+                write.write("BTC", "USD");
+                write.write("ETH", "USD");
+                write.write("XRP", "USD");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         });
