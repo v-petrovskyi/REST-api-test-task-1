@@ -1,11 +1,7 @@
 package com.example.testTask.services;
 
 import com.example.testTask.entity.PairPrice;
-import com.example.testTask.entity.Price;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -23,7 +19,7 @@ public class CexIoJson {
         this.restTemplate = restTemplate;
     }
 
-    public PairPrice getLastPrice(String curr1, String curr2) {
+    public PairPrice getLastPriceFromURL(String curr1, String curr2) {
         String URL_API_LAST_PRICE = "https://cex.io/api/last_price/";
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
