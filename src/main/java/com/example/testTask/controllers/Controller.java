@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,11 @@ public class Controller {
     @GetMapping("/cryptocurrencies/all")
     public List<Price> returnAll() {
         return priceService.getAll();
+    }
+
+    @GetMapping("/cryptocurrencies")
+    public List<Price> returnListOfPrices(@RequestParam("name") String currencyName, @RequestParam ("page") int page, @RequestParam ("size") int size){
+        return new ArrayList<>();
     }
 
 
