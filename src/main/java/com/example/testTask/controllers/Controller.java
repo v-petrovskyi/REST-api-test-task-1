@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cryptocurrencies")
 public class Controller {
 
     private final PriceService priceService;
@@ -19,19 +18,21 @@ public class Controller {
         this.priceService = priceService;
     }
 
-    @GetMapping("/minprice")
+    @GetMapping("/cryptocurrencies/minprice")
     public Price returnMinPrice(@RequestParam("name") String currencyName) {
         return priceService.getMin(currencyName);
     }
 
-    @GetMapping("/maxprice")
+    @GetMapping("/cryptocurrencies/maxprice")
     public Price returnManPrice(@RequestParam("name") String currencyName) {
         return priceService.getMax(currencyName);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/cryptocurrencies/all")
     public List<Price> returnAll() {
         return priceService.getAll();
     }
+
+
 
 }
