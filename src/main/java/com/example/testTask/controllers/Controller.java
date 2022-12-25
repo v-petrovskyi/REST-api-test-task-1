@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -21,7 +22,7 @@ public class Controller {
 
     @GetMapping("/cryptocurrencies/minprice")
     public Price returnMinPrice(@RequestParam("name") String currencyName) throws CurrencyException {
-            return priceService.getMin(currencyName);
+        return priceService.getMin(currencyName);
     }
 
     @GetMapping("/cryptocurrencies/maxprice")
@@ -35,17 +36,24 @@ public class Controller {
     }
 
     @GetMapping("/cryptocurrencies")
-    public List<Price> returnListOfPrices(@RequestParam("name") String currencyName, @RequestParam ("page") int page, @RequestParam ("size") int size){
-        return priceService.getSelectedPageOfCurrencies(currencyName, page, size);
+    public List<Price> returnListOfPrices(
+            @RequestParam("name") String currencyName,
+            @RequestParam(name = "page", required = false) Optional<Integer> page,
+            @RequestParam(name = "size", required = false) Optional<Integer> size) throws CurrencyException {
+        return priceService.getSelectedPageOfCurrencies(currencyName, page.orElse(1), size.orElse(10));
     }
 
     @ExceptionHandler
-    private ResponseEntity<ErrorResponse> handleException(CurrencyException e){
+    private ResponseEntity<ErrorResponse> handleException(CurrencyException e) {
         ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-
+//    @ExceptionHandler
+//    private ResponseEntity<ErrorResponse> handleException(CurrencyException e) {
+//        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//    }
 
 
 }
