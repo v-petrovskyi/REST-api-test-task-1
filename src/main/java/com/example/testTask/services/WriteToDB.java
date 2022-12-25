@@ -6,6 +6,7 @@ import com.example.testTask.util.PairPriceToPrice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public class WriteToDB {
         String key = curr1 + "/" + curr2;
         Price price = null;
         try{
-            price = PairPriceToPrice.convertToPrice(pairPrice);
-        } catch (NullPointerException e){
+            price = PairPriceToPrice.convertToPrice(pairPrice, LocalDateTime.now());
+        } catch (Exception e){
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException ex) {
