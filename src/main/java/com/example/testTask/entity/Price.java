@@ -20,7 +20,18 @@ public class Price {
     private Double lprice;
     private LocalDateTime date;
 
+    public Price() {
+    }
+
     public Price(String curr1, String curr2, Double lprice, LocalDateTime date) {
+        this.curr1 = curr1;
+        this.curr2 = curr2;
+        this.lprice = lprice;
+        this.date = date;
+    }
+
+    public Price(String id, String curr1, String curr2, Double lprice, LocalDateTime date) {
+        this.id = id;
         this.curr1 = curr1;
         this.curr2 = curr2;
         this.lprice = lprice;
