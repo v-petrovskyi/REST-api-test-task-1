@@ -1,10 +1,6 @@
 package com.example.testTask;
 
-import com.example.testTask.entity.PairPrice;
-import com.example.testTask.services.CexIoJson;
-import com.example.testTask.services.PriceService;
 import com.example.testTask.services.WriteToDB;
-import com.example.testTask.util.PairPriceToPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,9 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class TestTask1Application implements CommandLineRunner {
-
-    @Autowired
-    private PriceService priceService;
 
     @Autowired
     private WriteToDB write;
@@ -40,7 +33,7 @@ public class TestTask1Application implements CommandLineRunner {
                 write.write("ETH", "USD");
                 write.write("XRP", "USD");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

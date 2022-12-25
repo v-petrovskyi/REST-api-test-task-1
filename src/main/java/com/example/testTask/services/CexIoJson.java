@@ -26,7 +26,6 @@ public class CexIoJson {
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
         messageConverters.add(converter);
         restTemplate.setMessageConverters(messageConverters);
-//        PairPrice lastPrice = restTemplate.getForObject("https://cex.io/api/last_price/BTC/USD", PairPrice.class);
         PairPrice lastPrice = restTemplate.getForObject(URL_API_LAST_PRICE + curr1 + "/" + curr2, PairPrice.class);
         return lastPrice;
     }
