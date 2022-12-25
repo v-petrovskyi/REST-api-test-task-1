@@ -21,12 +21,13 @@ public class WriteToDB {
 
     public void write(String curr1, String curr2) {
         PairPrice pairPrice = new CexIoJson(new RestTemplate()).getLastPrice(curr1, curr2);
-        System.out.println(pairPrice);
+//        System.out.println(pairPrice);
         String key = curr1 + "/" + curr2;
         if (!lastPricesMap.containsKey(key)) {
-            lastPricesMap.put(key, pairPrice.getLprice());
             try {
                 priceService.add(PairPriceToPrice.convertToPrice(pairPrice));
+                lastPricesMap.put(key, pairPrice.getLprice());
+                return;
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 System.out.println(pairPrice);
@@ -35,9 +36,9 @@ public class WriteToDB {
         if (lastPricesMap.get(key).equals(pairPrice.getLprice())){
             return;
         }
-        lastPricesMap.put(key, pairPrice.getLprice());
         try {
             priceService.add(PairPriceToPrice.convertToPrice(pairPrice));
+            lastPricesMap.put(key, pairPrice.getLprice());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
