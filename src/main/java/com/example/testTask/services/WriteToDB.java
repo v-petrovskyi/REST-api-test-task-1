@@ -16,12 +16,8 @@ import java.util.Map;
 public class WriteToDB {
     private final Map<String, String> lastPricesMap = new HashMap<>();
 
-    private final PriceService priceService;
-
     @Autowired
-    public WriteToDB(PriceService priceService) {
-        this.priceService = priceService;
-    }
+    private PriceService priceService;
 
     public void write(String curr1, String curr2) {
         PairPrice pairPrice = new CexIoJson(new RestTemplate()).getLastPriceFromURL(curr1, curr2);

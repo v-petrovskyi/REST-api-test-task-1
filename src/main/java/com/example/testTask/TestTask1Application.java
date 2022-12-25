@@ -1,23 +1,25 @@
 package com.example.testTask;
 
 import com.example.testTask.services.WriteToDB;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.event.EventListener;
 import org.springframework.web.client.RestTemplate;
 
-
 @SpringBootApplication
-public class TestTask1Application implements CommandLineRunner {
-
-    @Autowired
-    private WriteToDB write;
+public class TestTask1Application /*implements CommandLineRunner*/ {
 
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+    @Bean
+    @Scope("singleton")
+    WriteToDB writeToDB(){
+        return new WriteToDB();
     }
 
     public static void main(String[] args) {
@@ -25,13 +27,13 @@ public class TestTask1Application implements CommandLineRunner {
     }
 
 
-    @Override
-    public void run(String... args) {
+    @EventListener(ApplicationReadyEvent.class)
+    public void getDataAndWriteToDB() {
         Thread thread = new Thread(() -> {
             while (true) {
-                write.write("BTC", "USD");
-                write.write("ETH", "USD");
-                write.write("XRP", "USD");
+                writeToDB().write("BTC", "USD");
+                writeToDB().write("ETH", "USD");
+                writeToDB().write("XRP", "USD");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
