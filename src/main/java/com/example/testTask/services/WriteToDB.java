@@ -2,6 +2,7 @@ package com.example.testTask.services;
 
 import com.example.testTask.entity.PairPrice;
 import com.example.testTask.entity.Price;
+import com.example.testTask.services.impl.CexIoJson;
 import com.example.testTask.util.PairPriceToPrice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

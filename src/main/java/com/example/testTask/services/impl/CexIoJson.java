@@ -1,6 +1,7 @@
-package com.example.testTask.services;
+package com.example.testTask.services.impl;
 
 import com.example.testTask.entity.PairPrice;
+import com.example.testTask.services.UrlApi;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -12,13 +13,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class CexIoJson {
+public class CexIoJson implements UrlApi {
     private final RestTemplate restTemplate;
 
     public CexIoJson(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    @Override
     public PairPrice getLastPriceFromURL(String curr1, String curr2) {
         String URL_API_LAST_PRICE = "https://cex.io/api/last_price/";
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
