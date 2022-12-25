@@ -10,5 +10,6 @@ public interface PriceService {
     Price getMin(String currency);
     Price getMax(String currency);
     List<Price> getAll();
+    List<Price> getSelectedPageOfCurrencies(String currency, int page, int size);
 }
 
