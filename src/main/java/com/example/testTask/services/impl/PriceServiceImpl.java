@@ -43,7 +43,9 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public List<Price> getSelectedPageOfCurrencies(String currency, int page, int size) {
         String[] split = currency.split("/");
-        repository.getPriceByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
-        return null;
+        List<Price> priceList = repository.getPriceByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
+        int fromIndex = (page * size) - size;
+        int toIndex = fromIndex + size;
+        return priceList.subList(fromIndex, toIndex);
     }
 }

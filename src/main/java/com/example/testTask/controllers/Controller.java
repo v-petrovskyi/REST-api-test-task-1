@@ -36,7 +36,7 @@ public class Controller {
 
     @GetMapping("/cryptocurrencies")
     public List<Price> returnListOfPrices(@RequestParam("name") String currencyName, @RequestParam ("page") int page, @RequestParam ("size") int size){
-        return new ArrayList<>();
+        return priceService.getSelectedPageOfCurrencies(currencyName, page, size);
     }
 
 
