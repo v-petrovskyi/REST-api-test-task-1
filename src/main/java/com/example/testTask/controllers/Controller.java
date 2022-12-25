@@ -1,13 +1,13 @@
 package com.example.testTask.controllers;
 
 import com.example.testTask.entity.Price;
+import com.example.testTask.exeptions.CurrencyException;
+import com.example.testTask.exeptions.ErrorResponse;
 import com.example.testTask.services.PriceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,12 +20,12 @@ public class Controller {
     }
 
     @GetMapping("/cryptocurrencies/minprice")
-    public Price returnMinPrice(@RequestParam("name") String currencyName) {
-        return priceService.getMin(currencyName);
+    public Price returnMinPrice(@RequestParam("name") String currencyName) throws CurrencyException {
+            return priceService.getMin(currencyName);
     }
 
     @GetMapping("/cryptocurrencies/maxprice")
-    public Price returnManPrice(@RequestParam("name") String currencyName) {
+    public Price returnMaxPrice(@RequestParam("name") String currencyName) throws CurrencyException {
         return priceService.getMax(currencyName);
     }
 
@@ -38,6 +38,13 @@ public class Controller {
     public List<Price> returnListOfPrices(@RequestParam("name") String currencyName, @RequestParam ("page") int page, @RequestParam ("size") int size){
         return priceService.getSelectedPageOfCurrencies(currencyName, page, size);
     }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(CurrencyException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 
