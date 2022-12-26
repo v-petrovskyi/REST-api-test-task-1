@@ -72,7 +72,7 @@ public class PriceServiceImpl implements PriceService {
         for (String s : set) {
             list.add(s + "," + getMin(s).getLprice() + "," + getMax(s).getLprice());
         }
-        list.add(0, "currency,min,max");
+        list.add(0, "Name,Min Price,Max Price");
         return list;
     }
 
