@@ -58,7 +58,7 @@ public class Controller {
     @ExceptionHandler
     private ResponseEntity<ErrorResponse> handleException(IncorrectPageException e){
         ErrorResponse response = new ErrorResponse(e.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 }
