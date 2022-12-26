@@ -2,6 +2,7 @@ package com.example.testTask.services.impl;
 
 import com.example.testTask.entity.Price;
 import com.example.testTask.exeptions.CurrencyException;
+import com.example.testTask.exeptions.IncorrectPageException;
 import com.example.testTask.repositories.PriceRepository;
 import com.example.testTask.services.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +51,17 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public List<Price> getSelectedPageOfCurrencies(String currency, int page, int size) throws CurrencyException {
+    public List<Price> getSelectedPageOfCurrencies(String currency, int page, int size) throws CurrencyException, IncorrectPageException {
         if (currency.equals("BTC/USD") || currency.equals("ETH/USD") || currency.equals("XRP/USD")) {
             String[] split = currency.split("/");
             List<Price> priceList = repository.getPriceByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
             int fromIndex = (page * size) - size;
             int toIndex = fromIndex + size;
-            return priceList.subList(fromIndex, toIndex);
+            try {
+                return priceList.subList(fromIndex, toIndex);
+            } catch (IndexOutOfBoundsException e) {
+                throw new IncorrectPageException("page " + page + " not exist");
+            }
         } else {
             throw new CurrencyException("currency " + currency + " not exist");
         }
