@@ -7,7 +7,7 @@ import com.example.testTask.services.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -37,8 +37,8 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Price getMax(String currency) throws CurrencyException {
         if (currency.equals("BTC/USD") || currency.equals("ETH/USD") || currency.equals("XRP/USD")) {
-        String[] split = currency.split("/");
-        return repository.getFirstByCurr1AndCurr2OrderByLpriceDesc(split[0], split[1]);
+            String[] split = currency.split("/");
+            return repository.getFirstByCurr1AndCurr2OrderByLpriceDesc(split[0], split[1]);
         } else {
             throw new CurrencyException("currency " + currency + " not exist");
         }
@@ -52,16 +52,36 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public List<Price> getSelectedPageOfCurrencies(String currency, int page, int size) throws CurrencyException {
         if (currency.equals("BTC/USD") || currency.equals("ETH/USD") || currency.equals("XRP/USD")) {
-        String[] split = currency.split("/");
-        List<Price> priceList = repository.getPriceByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
-        int fromIndex = (page * size) - size;
-        int toIndex = fromIndex + size;
-        return priceList.subList(fromIndex, toIndex);
+            String[] split = currency.split("/");
+            List<Price> priceList = repository.getPriceByCurr1AndCurr2OrderByLpriceAsc(split[0], split[1]);
+            int fromIndex = (page * size) - size;
+            int toIndex = fromIndex + size;
+            return priceList.subList(fromIndex, toIndex);
         } else {
             throw new CurrencyException("currency " + currency + " not exist");
         }
-
     }
 
+//    public List<String> listForCSVReport() throws CurrencyException {
+//        List<String> list = new ArrayList<>();
+//        List<Price> all = getAll();
+//        Set<String> set = new HashSet<>();
+//        for (Price price : all) {
+//            set.add(price.getCurr1() + "/" + price.getCurr2());
+//        }
+//        for (String s : set) {
+//            list.add(s + getMin(s).getLprice() + "," + getMax(s).getLprice());
+//        }
+//        return list;
+//    }
 
+    public Map<String, String> mapForCSVReport() throws CurrencyException {
+        Map<String, String> map = new HashMap<>();
+        List<Price> all = getAll();
+        for (Price price : all) {
+            String s = price.getCurr1() + "/" + price.getCurr2();
+            map.put(s + "," + getMin(s).getLprice() + "," + getMax(s).getLprice(), getMin(s).getLprice() + "," + getMax(s).getLprice());
+        }
+        return map;
+    }
 }
