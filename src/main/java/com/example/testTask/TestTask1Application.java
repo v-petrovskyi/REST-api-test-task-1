@@ -1,5 +1,6 @@
 package com.example.testTask;
 
+import com.example.testTask.services.CSVReport;
 import com.example.testTask.services.WriteToDB;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,12 @@ public class TestTask1Application {
     @Scope("singleton")
     WriteToDB writeToDB(){
         return new WriteToDB();
+    }
+
+    @Bean
+    @Scope("singleton")
+    CSVReport csvReport(){
+        return new CSVReport();
     }
 
     public static void main(String[] args) {
