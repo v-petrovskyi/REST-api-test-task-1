@@ -2,6 +2,7 @@ package com.example.testTask.controllers;
 
 import com.example.testTask.entity.Price;
 import com.example.testTask.exeptions.CurrencyException;
+import com.example.testTask.exeptions.IncorrectPageException;
 import com.example.testTask.services.PriceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ class ControllerTest {
         String currency = "BTC/UD";
         when(service.getMin(currency)).thenThrow(new CurrencyException("currency " + currency + " not exist"));
 
-        mockMvc.perform(get("/cryptocurrencies/minprice?name="+currency))
+        mockMvc.perform(get("/cryptocurrencies/minprice?name=" + currency))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString("currency " + currency + " not exist")));
     }
@@ -71,16 +72,14 @@ class ControllerTest {
     }
 
     @Test
-    void returnMaxPrice_Return_ErrorResponseJson_When_ParameterIsIncorrect() throws Exception {
+    void returnMaxPrice_Return_ErrorResponseJson_When_CurrencyIsIncorrect() throws Exception {
         String currency = "BTC/UD";
         when(service.getMax(currency)).thenThrow(new CurrencyException("currency " + currency + " not exist"));
 
-        mockMvc.perform(get("/cryptocurrencies/maxprice?name="+currency))
+        mockMvc.perform(get("/cryptocurrencies/maxprice?name=" + currency))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString("currency " + currency + " not exist")));
     }
-
-
 
     @Test
     void returnListOfPrices_Should_ReturnCorrectJson() throws Exception {
@@ -99,5 +98,17 @@ class ControllerTest {
                 .andExpect(jsonPath("$[*].curr1", containsInAnyOrder("BTC", "BTC")))
                 .andExpect(jsonPath("$[*].curr2", containsInAnyOrder("USD", "USD")))
                 .andExpect(jsonPath("$[*].lprice", containsInAnyOrder(16860.7, 17860.7)));
+    }
+
+    @Test
+    void returnMaxPrice_Return_ErrorResponseJson_When_PageNotExist() throws Exception {
+        String currency = "BTC/USD";
+        int page = 100;
+        int size = 100;
+        when(service.getSelectedPageOfCurrencies(currency, page, size)).thenThrow(new IncorrectPageException("page " + page + " not exist"));
+
+        mockMvc.perform(get("/cryptocurrencies?name=" + currency + "&page=" + page + "&size=" + size))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", containsString("page " + page + " not exist")));
     }
 }
