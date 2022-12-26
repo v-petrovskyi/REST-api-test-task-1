@@ -20,11 +20,11 @@ public class WriteToDB {
     private PriceService priceService;
 
     public void write(String curr1, String curr2) {
-        PairPrice pairPrice = new CexIoJson(new RestTemplate()).getLastPriceFromURL(curr1, curr2);
+        PairPrice lastPriceFromURL = new CexIoJson(new RestTemplate()).getLastPriceFromURL(curr1, curr2);
         String key = curr1 + "/" + curr2;
         Price price = null;
         try {
-            price = PairPriceToPrice.convertToPrice(pairPrice, LocalDateTime.now());
+            price = PairPriceToPrice.convertToPrice(lastPriceFromURL, LocalDateTime.now());
         } catch (Exception e) {
             try {
                 Thread.sleep(5000);
@@ -36,18 +36,18 @@ public class WriteToDB {
         if (!lastPricesMap.containsKey(key)) {
             try {
                 priceService.add(price);
-                lastPricesMap.put(key, pairPrice.getLprice());
+                lastPricesMap.put(key, lastPriceFromURL.getLprice());
                 return;
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }
-        if (lastPricesMap.get(key).equals(pairPrice.getLprice())) {
+        if (lastPricesMap.get(key).equals(lastPriceFromURL.getLprice())) {
             return;
         }
         try {
             priceService.add(price);
-            lastPricesMap.put(key, pairPrice.getLprice());
+            lastPricesMap.put(key, lastPriceFromURL.getLprice());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
