@@ -1,14 +1,24 @@
 package com.example.testTask.exeptions;
 
+import java.time.LocalDateTime;
+
 public class ErrorResponse {
     private String message;
-    private long timestamp;
+    private LocalDateTime timestamp;
 
     public ErrorResponse() {
     }
 
-    public ErrorResponse(String message, long timestamp) {
+    public ErrorResponse(String message, LocalDateTime timestamp) {
         this.message = message;
+        this.timestamp = timestamp;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -20,11 +30,4 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 }
