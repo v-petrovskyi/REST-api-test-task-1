@@ -10,12 +10,13 @@ import org.springframework.context.event.EventListener;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class TestTask1Application /*implements CommandLineRunner*/ {
+public class TestTask1Application {
 
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
     @Bean
     @Scope("singleton")
     WriteToDB writeToDB(){
@@ -25,7 +26,6 @@ public class TestTask1Application /*implements CommandLineRunner*/ {
     public static void main(String[] args) {
         SpringApplication.run(TestTask1Application.class, args);
     }
-
 
     @EventListener(ApplicationReadyEvent.class)
     public void getDataAndWriteToDB() {
@@ -44,6 +44,5 @@ public class TestTask1Application /*implements CommandLineRunner*/ {
         thread.setDaemon(true);
         thread.start();
     }
-
 
 }
