@@ -62,26 +62,18 @@ public class PriceServiceImpl implements PriceService {
         }
     }
 
-//    public List<String> listForCSVReport() throws CurrencyException {
-//        List<String> list = new ArrayList<>();
-//        List<Price> all = getAll();
-//        Set<String> set = new HashSet<>();
-//        for (Price price : all) {
-//            set.add(price.getCurr1() + "/" + price.getCurr2());
-//        }
-//        for (String s : set) {
-//            list.add(s + getMin(s).getLprice() + "," + getMax(s).getLprice());
-//        }
-//        return list;
-//    }
-
-    public Map<String, String> mapForCSVReport() throws CurrencyException {
-        Map<String, String> map = new HashMap<>();
+    public List<String> listForCSVReport() throws CurrencyException {
+        List<String> list = new ArrayList<>();
         List<Price> all = getAll();
+        Set<String> set = new HashSet<>();
         for (Price price : all) {
-            String s = price.getCurr1() + "/" + price.getCurr2();
-            map.put(s + "," + getMin(s).getLprice() + "," + getMax(s).getLprice(), getMin(s).getLprice() + "," + getMax(s).getLprice());
+            set.add(price.getCurr1() + "/" + price.getCurr2());
         }
-        return map;
+        for (String s : set) {
+            list.add(s + "," + getMin(s).getLprice() + "," + getMax(s).getLprice());
+        }
+        list.add(0, "currency,min,max");
+        return list;
     }
+
 }

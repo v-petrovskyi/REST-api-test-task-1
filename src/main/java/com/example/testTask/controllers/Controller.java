@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,10 +44,8 @@ public class Controller {
     }
 
     @GetMapping("/cryptocurrencies/csv")
-    public String createReport() throws CurrencyException, IOException {
-        String[] header = new String[]{"currency", "min", "max"};
-        csvReport.createCSVFile(header, priceService.mapForCSVReport());
-        return "report created";
+    public String createReport() throws CurrencyException {
+        return csvReport.createCSVFile(priceService.listForCSVReport());
     }
 
     @ExceptionHandler

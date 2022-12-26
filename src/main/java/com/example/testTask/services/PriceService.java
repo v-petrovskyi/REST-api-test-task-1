@@ -13,6 +13,6 @@ public interface PriceService {
     Price getMax(String currency) throws CurrencyException;
     List<Price> getAll();
     List<Price> getSelectedPageOfCurrencies(String currency, int page, int size) throws CurrencyException;
-    Map<String, String> mapForCSVReport() throws CurrencyException;
+    List<String> listForCSVReport() throws CurrencyException;
 }
 
