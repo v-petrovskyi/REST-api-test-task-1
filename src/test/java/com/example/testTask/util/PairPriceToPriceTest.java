@@ -12,7 +12,7 @@ class PairPriceToPriceTest {
 
 
     @Test
-    void convertToPrice_Should_ReturnTrue() {
+    void convertToPrice_Should_BeEqual() {
         PairPrice pairPrice = new PairPrice("BTC", "USD", "17656.2");
         LocalDateTime time = LocalDateTime.now();
         Price expected = new Price("BTC", "USD", 17656.2, time);
@@ -23,7 +23,7 @@ class PairPriceToPriceTest {
     }
 
     @Test
-    void convertToPrice_Should_ReturnFalse() {
+    void convertToPrice_Should_NotBeEqual() {
         PairPrice pairPrice = new PairPrice("BTC", "USD", "17656.2");
         LocalDateTime time = LocalDateTime.now();
         Price expected = new Price("Wrong", "currency", 0000.0, time);

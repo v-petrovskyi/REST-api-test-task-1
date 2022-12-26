@@ -83,7 +83,7 @@ class ControllerTest {
 
 
     @Test
-    void returnListOfPrices() throws Exception {
+    void returnListOfPrices_Should_ReturnCorrectJson() throws Exception {
         String currency = "BTC/USD";
         LocalDateTime time = LocalDateTime.now();
         when(service.getSelectedPageOfCurrencies(anyString(), anyInt(), anyInt()))
