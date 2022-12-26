@@ -127,10 +127,4 @@ class PriceServiceImplTest {
         assertThrows(IncorrectPageException.class, () -> priceService.getSelectedPageOfCurrencies(currency, page, size), expectedMessage);
     }
 
-
-    @Test
-    void listForCSVReport() {
-
-
-    }
 }
