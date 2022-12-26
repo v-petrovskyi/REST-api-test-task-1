@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +31,6 @@ public class Controller {
         return priceService.getMax(currencyName);
     }
 
-    @GetMapping("/cryptocurrencies/all")
-    public List<Price> returnAll() {
-        return priceService.getAll();
-    }
 
     @GetMapping("/cryptocurrencies")
     public List<Price> returnListOfPrices(
@@ -45,15 +42,9 @@ public class Controller {
 
     @ExceptionHandler
     private ResponseEntity<ErrorResponse> handleException(CurrencyException e) {
-        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
+        ErrorResponse response = new ErrorResponse(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
-//    @ExceptionHandler
-//    private ResponseEntity<ErrorResponse> handleException(CurrencyException e) {
-//        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//    }
 
 
 }
