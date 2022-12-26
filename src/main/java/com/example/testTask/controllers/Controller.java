@@ -3,6 +3,7 @@ package com.example.testTask.controllers;
 import com.example.testTask.entity.Price;
 import com.example.testTask.exeptions.CurrencyException;
 import com.example.testTask.exeptions.ErrorResponse;
+import com.example.testTask.exeptions.IncorrectPageException;
 import com.example.testTask.services.CSVReport;
 import com.example.testTask.services.PriceService;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class Controller {
     public List<Price> returnListOfPrices(
             @RequestParam("name") String currencyName,
             @RequestParam(name = "page", required = false) Optional<Integer> page,
-            @RequestParam(name = "size", required = false) Optional<Integer> size) throws CurrencyException {
+            @RequestParam(name = "size", required = false) Optional<Integer> size) throws CurrencyException, IncorrectPageException {
         return priceService.getSelectedPageOfCurrencies(currencyName, page.orElse(1), size.orElse(10));
     }
 
@@ -54,5 +55,10 @@ public class Controller {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(IncorrectPageException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
 }
